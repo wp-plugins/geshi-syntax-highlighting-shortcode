@@ -1,6 +1,6 @@
 <?php
-header('Content-type: text/javascript'); 
-require_once('../../../wp-load.php'); 
+header('Content-type: text/javascript');
+require_once('../../../../wp-load.php'); 
 if(isset($_GET['uid']) && ctype_xdigit($_GET['uid']))
 {
 	$uid = $_GET['uid'];

@@ -3,7 +3,7 @@
 Plugin Name: GeSHi Syntax Highlighting Shortcode
 Description: Use custom fields to store your code snippets. This will help with the TimyMCE WYSIWYG editor included in Wordpress.
 Plugin URI:  http://jquery101.com/
-Version:     0.1
+Version:     0.1.2
 Author:      Adam Benoit
 Author URI:  http://adambenoit.com
 */
@@ -32,7 +32,7 @@ $geshi_supported_langs = array("abap", "actionscript", "actionscript3", "ada", "
 function geshi_head()
 {
 	wp_enqueue_script('jquery');
-	$css_url = WP_PLUGIN_URL . "/syntax-shortcode/syntax-shortcode.css.php";
+	$css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/syntax-shortcode.css.php";
 	echo "\n".'<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />'."\n";
 }
 
@@ -65,22 +65,45 @@ function syntax_shortcode($atts, $tag) {
 	}
 	$uid = geshi_uid($tag);
 	$geshi = new GeSHi(get_post_meta($post->ID, $tag, true), $lang);
+	$geshi->enable_strict_mode(true);
+	if(get_option('syntax_shortcode_css_output') == "enabled")
+	{
+		$geshi->enable_classes();
+		$output .= "<style type='text/css'><!--";
+		// Echo out the stylesheet for this code block
+		$output .=  $geshi->get_stylesheet();
+		// And continue echoing the page
+		$output .= "--></style>";
+	}
 	/*
 	GESHI_NORMAL_LINE_NUMBERS - Use normal line numbering
     GESHI_FANCY_LINE_NUMBERS - Use fancy line numbering
     GESHI_NO_LINE_NUMBERS - Disable line numbers (default)
 	*/
-	echo get_option('syntax_shortcode_numbering');
-    $geshi->enable_line_numbers(get_option('syntax_shortcode_numbering'),2);
-	$geshi->set_line_style('background: #fcfcfc;', 'background: #f0f0f0;');
+	if(get_option('syntax_shortcode_numbering')== 0 )
+	{
+		$geshi->enable_line_numbers(GESHI_NO_LINE_NUMBERS);
+	}
+	elseif(get_option('syntax_shortcode_numbering')== 1 )
+	{
+		$geshi->enable_line_numbers(GESHI_NORMAL_LINE_NUMBERS);
+	}
+	elseif(get_option('syntax_shortcode_numbering')== 2 )
+	{
+		$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, get_option('syntax_shortcode_striping_nth'));
+	}
+	//$geshi->set_header_type(GESHI_HEADER_DIV);
+	
+	
+	$geshi->set_line_style('background: '.get_option("syntax_shortcode_bgcolor").';', 'background: '.get_option ("syntax_shortcode_striping_color").';');
 	if($line != NULL)
 	{
 		$geshi->start_line_numbers_at($line);
 	}
 	// Build the output
-   	$geshi_js_url = WP_PLUGIN_URL . "/syntax-shortcode/syntax-shortcode.js.php";
+   	$geshi_js_url = WP_PLUGIN_URL . "/syntax-shortcode/js/syntax-shortcode.js.php";
 
-	$output = "<div class='geshi'>";
+	$output .= "<div class='geshi'>";
 	if($toggle == 'enabled')
 	{
 		$output .= "<script src='".$geshi_js_url."?uid=".$uid."'></script>";
@@ -90,12 +113,14 @@ function syntax_shortcode($atts, $tag) {
 	{
 		// nothing
 	}
-	$output .= "<div class='code' id='geshi_".$uid."'><pre>";
+	$output .= "<div class='code' id='geshi_".$uid."'>";
+	// parse the code.
 	$output .= $geshi->parse_code();
-	$output .= "</pre>";
 	$output .= "</div>";
 	$output .= "</div>";
-	$uid == NULL;
+	// set the unique ID to null so the plugin created a new one for the next block ov code.
+	$uid = NULL;
+	// return the output.
 	return $output;
 	
 }
@@ -110,35 +135,74 @@ function syntax_shortcode_options() {
 	include_once("syntax-shortcode-options.php");
 }
 
-function syntax_shortcode_register_settings() { // whitelist options
+function syntax_shortcode_register_settings() 
+{ // whitelist options
+
+	// Code Language
 	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_default_lang' );
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_numbering' );
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_enable' );
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_default_toggle' );
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_text_hide' );
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_text_show' );
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_align' );
 	if (! get_option ("syntax_shortcode_default_lang")) {
 		add_option ("syntax_shortcode_default_lang", "php") ;
 	}
+	
+	// Line Numbering
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_numbering' );
 	if (! get_option ("syntax_shortcode_numbering")) {
 		add_option ("syntax_shortcode_numbering", "GESHI_NORMAL_LINE_NUMBERS") ;
 	}
+	
+	// Code Hiding
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_enable' );
 	if (! get_option ("syntax_shortcode_toggle_enable")) {
-		add_option ("syntax_shortcode_toggle_enable", "Enabled") ;
+		add_option ("syntax_shortcode_toggle_enable", "enabled") ;
 	}
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_default_toggle' );
 	if (! get_option ("syntax_shortcode_default_toggle")) {
 		add_option ("syntax_shortcode_default_toggle", "Show") ;
 	}
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_text_hide' );
+	if (! get_option ("syntax_shortcode_toggle_text_hide")) {
+		add_option ("syntax_shortcode_toggle_text_hide", "Show Code") ;
+	}
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_text_show' );
 	if (! get_option ("syntax_shortcode_toggle_text_show")) {
 		add_option ("syntax_shortcode_toggle_text_show", "Show Code") ;
 	}
-	if (! get_option ("syntax_shortcode_toggle_text_show")) {
-		add_option ("syntax_shortcode_toggle_text_show", "Show Code") ;
-	}
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_toggle_align' );
 	if (! get_option ("syntax_shortcode_toggle_align")) {
 		add_option ("syntax_shortcode_toggle_align", "Right") ;
 	}
+	
+	// Colors
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_bgcolor' );
+	if (! get_option ("syntax_shortcode_bgcolor")) {
+		add_option ("syntax_shortcode_bgcolor", "#fcfcfc") ;
+	}	
+
+
+	// Zebra Striping
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_striping_enable' );
+	if (! get_option ("syntax_shortcode_striping_enable")) {
+		add_option ("syntax_shortcode_striping_enable", "Enabled") ;
+	}
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_striping_fgcolor' );
+	if (! get_option ("syntax_shortcode_striping_color")) {
+		add_option ("syntax_shortcode_striping_color", "#f0f0f0") ;
+	}
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_striping_nth', 'intval' );
+	if (! get_option ("syntax_shortcode_striping_nth")) {
+		add_option ("syntax_shortcode_striping_nth", 2) ;
+	}
+	
+	// Other settings
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_css_output' );
+	if (! get_option ("syntax_shortcode_css_output")) {
+		add_option ("syntax_shortcode_css_output", "enabled") ;
+	}
+
+
+
+	// Colors
+	// Zebra Striping
 }
 
 
@@ -155,6 +219,8 @@ if ( is_admin() )
 	add_action('admin_menu', 'syntax_shortcode_menu');
 	// Register settings 
 	add_action( 'admin_init', 'syntax_shortcode_register_settings' );
+	wp_enqueue_script('iColorPicker', WP_PLUGIN_URL.'/'.plugin_basename(dirname(__FILE__)).'/js/iColorPicker-noLink.js.php',array('jquery'),'1.0');
+
 } else {
   // non-admin enqueues, actions, and filters
 }
