@@ -1,18 +1,18 @@
 <div class="wrap">
 <?php
-	$admin_css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/syntax-shortcode-admin.css.php";
+	$admin_css_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/css/syntax-shortcode-admin.css.php";
 	echo "\n<link rel='stylesheet' href='".$admin_css_url."' type='text/css' media='screen' />\n";
 
-	$picker_css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/colorpicker.css";
+	$picker_css_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/css/colorpicker.css";
 	echo "\n<link rel='stylesheet' href='".$picker_css_url."' type='text/css' media='screen' />\n";
 	
-	$jquery_ui_css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/base/ui.all.css";
+	$jquery_ui_css_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/css/base/ui.all.css";
 	echo "\n<link rel='stylesheet' href='".$jquery_ui_css_url."' type='text/css' media='screen' />\n";
 	
-	$picker_js_url = WP_PLUGIN_URL . "/syntax-shortcode/js/colorpicker.js";
+	$picker_js_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/js/colorpicker.js";
 	echo "\n<script src='".$picker_js_url."' type='text/javascript' ></script>\n";
 	
-	$admin_js_url = WP_PLUGIN_URL . "/syntax-shortcode/js/syntax-shortcode-admin.js.php";
+	$admin_js_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/js/syntax-shortcode-admin.js.php";
 	echo "\n<script src='".$admin_js_url."' type='text/javascript' ></script>\n";
 ?>
 	

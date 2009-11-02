@@ -3,7 +3,7 @@
 Plugin Name: GeSHi Syntax Highlighting Shortcode
 Description: Use custom fields to store your code snippets. This will help with the TimyMCE WYSIWYG editor included in Wordpress.
 Plugin URI:  http://jquery101.com/
-Version:     0.1.3
+Version:     0.1.3b
 Author:      Adam Benoit
 Author URI:  http://adambenoit.com
 */
@@ -32,7 +32,7 @@ $geshi_supported_langs = array("abap", "actionscript", "actionscript3", "ada", "
 function geshi_head()
 {
 	wp_enqueue_script('jquery');
-	$css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/syntax-shortcode.css.php";
+	$css_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/css/syntax-shortcode.css.php";
 	echo "\n".'<link rel="stylesheet" href="' . $css_url . '" type="text/css" media="screen" />'."\n";
 }
 
@@ -109,7 +109,7 @@ function syntax_shortcode($atts, $tag) {
 		$geshi->start_line_numbers_at($line);
 	}
 	// Build the output
-   	$geshi_js_url = WP_PLUGIN_URL . "/syntax-shortcode/js/syntax-shortcode.js.php";
+   	$geshi_js_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/js/syntax-shortcode.js.php";
 
 	$output .= "<div class='geshi'>";
 	if($toggle == 'enabled')
