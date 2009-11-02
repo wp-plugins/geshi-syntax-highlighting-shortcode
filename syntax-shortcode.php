@@ -3,7 +3,7 @@
 Plugin Name: GeSHi Syntax Highlighting Shortcode
 Description: Use custom fields to store your code snippets. This will help with the TimyMCE WYSIWYG editor included in Wordpress.
 Plugin URI:  http://jquery101.com/
-Version:     0.1.3b
+Version:     0.1.4
 Author:      Adam Benoit
 Author URI:  http://adambenoit.com
 */
@@ -222,7 +222,7 @@ if ( is_admin() )
 	// Register settings 
 	add_action( 'admin_init', 'syntax_shortcode_register_settings' );
 	
-	wp_register_script('jquery-ui-custom-syntax', ( plugins_url('syntax-shortcode/js/jquery-ui-1.7.2.custom.min.js')), false, '1.7.2',true);
+	wp_register_script('jquery-ui-custom-syntax', ( plugins_url('geshi-syntax-highlighting-shortcode/js/jquery-ui-1.7.2.custom.min.js')), false, '1.7.2',true);
 	wp_enqueue_script('jquery-ui-custom-syntax');
 
 } else {
