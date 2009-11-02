@@ -3,7 +3,7 @@
 Plugin Name: GeSHi Syntax Highlighting Shortcode
 Description: Use custom fields to store your code snippets. This will help with the TimyMCE WYSIWYG editor included in Wordpress.
 Plugin URI:  http://jquery101.com/
-Version:     0.1.2
+Version:     0.1.3
 Author:      Adam Benoit
 Author URI:  http://adambenoit.com
 */
@@ -94,8 +94,16 @@ function syntax_shortcode($atts, $tag) {
 	}
 	//$geshi->set_header_type(GESHI_HEADER_DIV);
 	
+	if(get_option("syntax_shortcode_striping_enable") == "enabled")
+	{
+		$geshi->set_line_style('background: '.get_option ("syntax_shortcode_bgcolor").';', 'background: '.get_option ("syntax_shortcode_striping_color").';');
+	}
+	else
+	{
+		$geshi->set_line_style('background: '.get_option ("syntax_shortcode_bgcolor").';');
+
+	}
 	
-	$geshi->set_line_style('background: '.get_option("syntax_shortcode_bgcolor").';', 'background: '.get_option ("syntax_shortcode_striping_color").';');
 	if($line != NULL)
 	{
 		$geshi->start_line_numbers_at($line);
@@ -184,7 +192,7 @@ function syntax_shortcode_register_settings()
 	if (! get_option ("syntax_shortcode_striping_enable")) {
 		add_option ("syntax_shortcode_striping_enable", "Enabled") ;
 	}
-	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_striping_fgcolor' );
+	register_setting( 'syntax_shortcode_options', 'syntax_shortcode_striping_color' );
 	if (! get_option ("syntax_shortcode_striping_color")) {
 		add_option ("syntax_shortcode_striping_color", "#f0f0f0") ;
 	}
@@ -198,13 +206,7 @@ function syntax_shortcode_register_settings()
 	if (! get_option ("syntax_shortcode_css_output")) {
 		add_option ("syntax_shortcode_css_output", "enabled") ;
 	}
-
-
-
-	// Colors
-	// Zebra Striping
 }
-
 
 // Add hooks
 // css
@@ -219,7 +221,9 @@ if ( is_admin() )
 	add_action('admin_menu', 'syntax_shortcode_menu');
 	// Register settings 
 	add_action( 'admin_init', 'syntax_shortcode_register_settings' );
-	wp_enqueue_script('iColorPicker', WP_PLUGIN_URL.'/'.plugin_basename(dirname(__FILE__)).'/js/iColorPicker-noLink.js.php',array('jquery'),'1.0');
+	
+	wp_register_script('jquery-ui-custom-syntax', ( plugins_url('syntax-shortcode/js/jquery-ui-1.7.2.custom.min.js')), false, '1.7.2',true);
+	wp_enqueue_script('jquery-ui-custom-syntax');
 
 } else {
   // non-admin enqueues, actions, and filters

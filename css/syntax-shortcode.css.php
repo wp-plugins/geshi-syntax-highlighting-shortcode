@@ -1,6 +1,6 @@
 <?php 
 header('Content-type: text/css'); 
-require_once('../../../wp-load.php'); 
+require_once('../../../../wp-load.php');
 ?>
 .geshi {
   color: #100;
@@ -56,4 +56,3 @@ require_once('../../../wp-load.php');
 	text-align: <?php echo get_option('syntax_shortcode_toggle_align'); ?>;
 	padding: 4px;
 }
-</style>

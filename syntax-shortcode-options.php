@@ -1,4 +1,22 @@
 <div class="wrap">
+<?php
+	$admin_css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/syntax-shortcode-admin.css.php";
+	echo "\n<link rel='stylesheet' href='".$admin_css_url."' type='text/css' media='screen' />\n";
+
+	$picker_css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/colorpicker.css";
+	echo "\n<link rel='stylesheet' href='".$picker_css_url."' type='text/css' media='screen' />\n";
+	
+	$jquery_ui_css_url = WP_PLUGIN_URL . "/syntax-shortcode/css/base/ui.all.css";
+	echo "\n<link rel='stylesheet' href='".$jquery_ui_css_url."' type='text/css' media='screen' />\n";
+	
+	$picker_js_url = WP_PLUGIN_URL . "/syntax-shortcode/js/colorpicker.js";
+	echo "\n<script src='".$picker_js_url."' type='text/javascript' ></script>\n";
+	
+	$admin_js_url = WP_PLUGIN_URL . "/syntax-shortcode/js/syntax-shortcode-admin.js.php";
+	echo "\n<script src='".$admin_js_url."' type='text/javascript' ></script>\n";
+?>
+	
+	
 	<h2>Syntax Shortcode Options</h2>
 	<form method="post" action="options.php">
 		<?php
@@ -145,8 +163,10 @@
 			<tr valign="top">
 				<th scope="row">Background Color</th>
 				<td width="300px">
-					<input type="text" id="syntax_shortcode_bgcolor" name="syntax_shortcode_bgcolor" value="<?php echo get_option('syntax_shortcode_bgcolor'); ?>" size="8" maxlength="7"  class="iColorPicker">
-					</td><td><span class="description">Background of the code area.</span></td>
+					<input type="text" id="syntax_shortcode_bgcolor" name="syntax_shortcode_bgcolor" value="<?php echo get_option('syntax_shortcode_bgcolor'); ?>" size="8" maxlength="7"style="background-color:<?php echo get_option('syntax_shortcode_bgcolor'); ?>">
+					<div id="syntax_shortcode_bgcolor_picker"/>
+					</td>
+					<td><span class="description">Background of the code area.</span></td>
 				</td>
 			</tr>
 		</table>
@@ -170,20 +190,40 @@
 				<th scope="row">Stripe every n<sup>th</sup> line</th>
 				<td width="300px">
 					<input type="text" id="syntax_shortcode_striping_nth" name="syntax_shortcode_striping_nth" value="<?php echo get_option('syntax_shortcode_striping_nth'); ?>" size="8" maxlength="7">
+					<div id="syntax_shortcode_striping_nth_slider"/>
 					</td><td><span class="description">Background color of the Zebra Stripes.</span></td>
 				</td>
 			</tr>
 			<tr valign="top">
 				<th scope="row">Background Color</th>
 				<td width="300px">
-					<input type="text" id="syntax_shortcode_striping_color" name="syntax_shortcode_striping_color" value="<?php echo get_option('syntax_shortcode_striping_color'); ?>" size="8" maxlength="7" class="iColorPicker">
+					<input type="text" id="syntax_shortcode_striping_color" name="syntax_shortcode_striping_color" value="<?php echo get_option('syntax_shortcode_striping_color'); ?>" size="8" maxlength="7" style="background-color:<?php echo get_option('syntax_shortcode_striping_color'); ?>">
+					<div id="syntax_shortcode_striping_color_picker"></div>
 					</td><td><span class="description">Background color of the Zebra Stripes.</span></td>
 				</td>
 			</tr>
 		</table>
-					
+		<h3>CSS Output</h3>
+		<table class="form-table">
+			<tr valign="top">
+				<th scope="row">Enable CSS Output</th>
+				<td width="300px">
+					<input type="checkbox" id="syntax_shortcode_css_output" name="syntax_shortcode_css_output" value="enabled"
+					<?php
+					if(get_option('syntax_shortcode_css_output') == "enabled")
+					{
+						echo " checked";
+					}
+					?>
+					>
+					</td>
+					<td><span class="description">When displaying large blocks of code, using CSS output will reduce the size of the outputted code.</span></td>
+				</td>
+			</tr>
+		</table>			
 		<p class="submit">
 			<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 		</p>
 	</form>
+	
 </div>
