@@ -27,7 +27,51 @@ if (!defined("WP_CONTENT_URL")) define("WP_CONTENT_URL", get_option("siteurl") .
 if (!defined("WP_PLUGIN_URL"))  define("WP_PLUGIN_URL",  WP_CONTENT_URL        . "/plugins");
 
 // Declare a list of acceptable code languages.
-$geshi_supported_langs = array("abap", "actionscript", "actionscript3", "ada", "apache", "applescript", "aptsources", "asm", "asp", "autoit", "avisynth", "bash", "bf", "bibtex", "blitzbasic", "bnf", "boo", "c", "cmac", "caddcl", "cadlisp", "cil", "cfdg", "cfm", "cmake", "cobol", "cpp-qt", "cpp", "csharp", "css", "d", "dcs", "delphi", "diff", "div", "dos", "dot", "eiffel", "email", "erlang", "fo", "fortran", "freebasic", "genero", "gettext", "glsl", "gml", "bnuplot", "groovy", "haskell", "hq9plus", "html4strict", "idl", "ini", "inno", "intercal", "io", "java", "java5", "javascript", "kixtart", "klonec", "klonecpp", "latex", "lisp", "locobasic", "lolcode lotusformulas", "lotusscript", "lscript", "lsl2", "lua", "m68k", "make", "matlab", "mirc", "modula3", "mpasm", "mxml", "mysql", "nsis", "oberon2", "objc", "ocaml-brief", "ocaml", "oobas", "oracle11", "oracle8", "pascal", "per", "pic16", "pixelbender", "perl", "php-brief", "php", "plsql", "povray", "powershell", "progress", "prolog", "properties", "providex", "python", "qbasic", "rails", "rebol", "reg", "robots", "ruby", "sas", "scala", "scheme", "scilab", "sdlbasic", "smalltalk", "smarty", "sql", "tcl", "teraterm", "text", "thinbasic", "tsql", "typoscript", "vb", "vbnet", "verilog", "vhdl", "vim", "visualfoxpro", "visualprolog", "whitespace", "whois", "winbatch", "xml", "xorg_conf", "xpp", "z80");
+$geshi_supported_langs = array(	 "abap" => "ABAP", "actionscript" => "Actionscript", "actionscript3" => "Actionscript 3",
+								 "ada" => "ADA", "apache" => "Apache Log", "applescript" => "AppleScript",
+								 "aptsources" => "APT sources.list", "asm" => "ASM (x86)", "asp" => "ASP",
+								 "autoit" => "AutoIT", "avisynth" => "AviSynth", "bash" => "Bash",
+								 "bf" => "Brainfuck", "bibtex" => "BibTeX", "blitzbasic" => "BlitzBasic",
+								 "bnf" => "Backus-Naur form", "boo" => "Boo", "c" => "C",
+								 "cmac" => "C for Macs", "caddcl" => "CAD DCL", "cadlisp" => "CadLisp",
+								 "cil" => "CIL / MSIL", "cfdg" => "CFDG", "cfm" => "ColdFusion",
+								 "cmake" => "C Make", "cobol" => "COBOL", "cpp-qt" => "C++ (with QT)",
+								 "cpp" => "C++", "csharp" => "C#", "css" => "CSS", 
+								 "d" => "D", "dcs" => "DCS", "delphi" => "Delphi",
+								 "diff" => "Diff File Format", "div" => "DIV", "dos" => "DOS",
+								 "dot" => "DOT language", "eiffel" => "Eiffel", "email" => "E-mail",
+								 "erlang" => "Erlang", "fo" => "FO", "fortran" => "Fortran",
+								 "freebasic" => "FreeBasic", "genero" => "FourJ's Genero", "gettext" => "GetText",
+								 "glsl" => "glSlang", "gml" => "GML", "bnuplot" => "gnuplot",
+								 "groovy" => "Groovy", "haskell" => "Haskell", "hq9plus" => "HQ9+",
+								 "html4strict" => "HTML", "idl" => "Uno IDL", "ini" => "INI (Config Files)",
+								 "inno" => "Inno", "intercal" => "INTERCAL", "io" => "IO",
+								 "java" => "Java", "java5" => "Java 5", "javascript" => "Javascript",
+								 "kixtart" => "KiXtart", "klonec" => "KLone C", "klonecpp" => "KLone C++",
+								 "latex" => "LaTeX", "lisp" => "Lisp", "locobasic" => "Loco Basic",
+								 "lolcode" => "LOLcode",  "lotusformulas" => "Lotus Formulas", "lotusscript" => "LotusScript",
+								 "lscript" => "LScript", "lsl2" => "LSL2", "lua" => "Lua",
+								 "m68k" => "ASM (m68k)", "make" => "Make", "matlab" => "MATLAB",
+								 "mirc" => "mIRC", "modula3" => "Modula3", "mpasm" => "MPASM",
+								 "mxml" => "MXML", "mysql" => "MySQL", "nsis" => "NSIS",
+								 "oberon2" => "Oberon-2", "objc" => "Objective C", "ocaml-brief" => "OCaml",
+								 "ocaml" => "OpenOffice BASIC", "oobas" => "oobas", "oracle11" => "Oracle 11 SQL",
+								 "oracle8" => "Oracle 8 SQL", "pascal" => "Pascal", "per" => "Perl",
+								 "pic16" => "ASM (pic16)", "pixelbender" => "Pixel Bender", "perl" => "PERL",
+								 "php-brief" => "PHP Brief", "php" => "PHP", "plsql" => "PL/SQL",
+								 "povray" => "POV-Ray",	"powershell" => "PowerShell", "progress" => "Progress (OpenEdge ABL)",
+								 "prolog" => "Prolog", "properties" => "properties", "providex" => "ProvideX",
+								 "python" => "Python", "qbasic" => "Q(uick)BASIC",  "rails" => "Ruby on Rails",
+								 "rebol" => "REBOL ", "reg" => "Windows Registry Files", "robots" => "robots.txt",
+								 "ruby" => "Ruby", "sas" => "SAS", "scala" => "Scala", "scheme" => "Scheme",
+								 "scilab" => "Scilab", "sdlbasic" => "SDLBasic", "smalltalk" => "Smalltalk",
+								 "smarty" => "Smarty", "sql" => "SQL", "tcl" => "TCL",
+								 "teraterm" => "Tera Term", "text" => "Text", "thinbasic" => "thinBasic",
+								 "tsql" => "T-SQL", "typoscript" => "TypoScript", "vb" => "Visual BASIC",
+								 "vbnet" => "VB.NET", "verilog" => "Verilog", "vhdl" => "VHDL",
+								 "vim" => "VIM Script", "visualfoxpro" => "Visual Fox Pro", "visualprolog" => "Visual Prolog",
+								 "whitespace" => "Whitespace", "whois" => "Whois", "winbatch" => "Winbatch",
+								 "xml" => "XML", "xorg_conf" => "Xorg.conf", "xpp" => "X++", "z80" => "ASM (z80)" );
 
 function geshi_head()
 {
@@ -56,10 +100,10 @@ function syntax_shortcode($atts, $tag) {
 	extract(shortcode_atts(array(
 		'lang' => get_option('syntax_shortcode_default_lang'),
 		'line' => NULL,
-		'toggle'=> get_option('syntax_shortcode_toggle_enable')
+		'toggle'=> get_option('syntax_shortcode_default_toggle')
 	), $atts));
 	// Compare the passed language to a list of acceptable code languages, if it not in the list, set it to HTML
-	if(!in_array($lang, $geshi_supported_langs))
+	if(!array_key_exists($lang, $geshi_supported_langs))
 	{
 		$lang = "html4strict";
 	}
@@ -91,9 +135,7 @@ function syntax_shortcode($atts, $tag) {
 	elseif(get_option('syntax_shortcode_numbering')== 2 )
 	{
 		$geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS, get_option('syntax_shortcode_striping_nth'));
-	}
-	//$geshi->set_header_type(GESHI_HEADER_DIV);
-	
+	}	
 	if(get_option("syntax_shortcode_striping_enable") == "enabled")
 	{
 		$geshi->set_line_style('background: '.get_option ("syntax_shortcode_bgcolor").';', 'background: '.get_option ("syntax_shortcode_striping_color").';');
@@ -112,21 +154,19 @@ function syntax_shortcode($atts, $tag) {
    	$geshi_js_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/js/syntax-shortcode.js.php";
 
 	$output .= "<div class='geshi'>";
-	if($toggle == 'enabled')
+	if( get_option('syntax_shortcode_toggle_enable') == 'Enabled')
 	{
-		$output .= "<script src='".$geshi_js_url."?uid=".$uid."'></script>";
+//		if(strtolower($toggle) == "show" || (strtolower($toggle) == "enable" 
+		$output .= "<script src='".$geshi_js_url."?uid=".$uid."&state=".$uid."'></script>";
 		$output .= "<div class='geshi_code_actions'><a href='#' class='geshi_toggle' id='geshi_toggle_".$uid."'>".get_option('syntax_shortcode_toggle_text_hide')."</a></div>";
 	}
-	else
-	{
-		// nothing
-	}
+
 	$output .= "<div class='code' id='geshi_".$uid."'>";
 	// parse the code.
 	$output .= $geshi->parse_code();
 	$output .= "</div>";
 	$output .= "</div>";
-	// set the unique ID to null so the plugin created a new one for the next block ov code.
+	// set the unique ID to null so the plugin created a new one for the next block of code.
 	$uid = NULL;
 	// return the output.
 	return $output;

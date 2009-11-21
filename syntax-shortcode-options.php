@@ -2,7 +2,7 @@
 <?php
 	$admin_css_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/css/syntax-shortcode-admin.css.php";
 	echo "\n<link rel='stylesheet' href='".$admin_css_url."' type='text/css' media='screen' />\n";
-
+	
 	$picker_css_url = WP_PLUGIN_URL . "/geshi-syntax-highlighting-shortcode/css/colorpicker.css";
 	echo "\n<link rel='stylesheet' href='".$picker_css_url."' type='text/css' media='screen' />\n";
 	
@@ -31,14 +31,14 @@
 					<?php
 					if(is_array($geshi_supported_langs))
 					{
-						foreach($geshi_supported_langs as $this_lang)
+						foreach($geshi_supported_langs as $this_lang_key => $this_lang_value)
 						{
-							echo "<option value='".$this_lang."'";
+							echo "<option value='".$this_lang_key."'";
 							if($this_lang == get_option('syntax_shortcode_default_lang'))
 							{
 								echo " selected";
 							}
-							echo ">".$this_lang."&nbsp;&nbsp;</option>\n";
+							echo ">".$this_lang_value."&nbsp;&nbsp;</option>\n";
 						}
 					}				
 					
@@ -94,7 +94,7 @@
 					</td><td><span class="description">Turns colapsing feature on/off.</span></td>
 				</td>
 			</tr>
-<!--			<tr valign="top">
+			<tr valign="top">
 				<th scope="row">Toggle default</th>
 				<td width="300px">
 					<select name="syntax_shortcode_default_toggle">
@@ -117,7 +117,7 @@
 					</td><td><span class="description">Default toggle position.</span></td>
 				</td>
 			</tr>
--->			<tr valign="top">
+			<tr valign="top">
 				<th scope="row">Show Text</th>
 				<td width="300px">
 					<input type="text" id="syntax_shortcode_toggle_text_show" name="syntax_shortcode_toggle_text_show" value="<?php echo get_option('syntax_shortcode_toggle_text_show'); ?>" size="32" maxlength="20">

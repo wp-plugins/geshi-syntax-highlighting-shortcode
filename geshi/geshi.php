@@ -32,7 +32,6 @@
  * @license    http://gnu.org/copyleft/gpl.html GNU GPL
  *
  */
-
 //
 // GeSHi Constants
 // You should use these constant names in your programs instead of

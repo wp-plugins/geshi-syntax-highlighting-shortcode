@@ -1,3 +1,3 @@
-jQuery(function($) {
-	 $('#colorpicker').farbtastic();
+jQuery(function($) {
+	 $('#colorpicker').farbtastic();
  });
